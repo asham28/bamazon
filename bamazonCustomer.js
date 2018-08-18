@@ -1,5 +1,4 @@
 // LEFT TO DO
-// 1. ENDV YOUR PASSWORD !
 // 2. MAKE THE DISPLAY INVENTORY MORE CUSTOMER FRIENDLY
 // 3. CREATE DRY CODE
 
@@ -7,13 +6,16 @@
 // STEP UP REQUIRED MODUELS
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+require("dotenv").config();
+
+
 
 // CONNECT TO MYSQL DATABASE
 var connection = mysql.createConnection({
-    host: "localhost",
+    host: process.env.DB_HOST,
     port: 3306,
-    user: "root",
-    // password: <<INSERT PASSWORD>>,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
     database: "bamazonDB"
 });
 
@@ -26,7 +28,7 @@ connection.connect(function (err) {
     console.log("========================")
 
     displayInventory();
-    customerQuery();
+    // customerQuery();
 
 });
 
@@ -49,6 +51,9 @@ function displayInventory() {
 
 // STEP 2: PROMPT USER WITH TWO MESSAGES
 // The first should ask them the ID of the product they would like to buy.
+
+
+setTimeout(customerQuery, 200); 
 
 function customerQuery() {
 
