@@ -5,7 +5,7 @@ CREATE DATABASE bamazonDB;
 USE bamazonDB; 
 
 CREATE TABLE products (
-	item_id Int(100) auto_increment,  
+	item_id Int(100) NOT NULL auto_increment,  
 	product_name VARCHAR(100),
     department_name VARCHAR(100),
     price DECIMAL(10,2),
@@ -29,8 +29,17 @@ VALUES 	("Chair", "Furniture", 15.99, 10),
                 ("Blender", "Kitche", 58.99, 10),
                 ("Laptop", "Electronics", 449.99, 10);
 
+
+
+UPDATE products SET stock_quantity = 9 WHERE item_id = 1; 
+
+
+INSERT INTO prodcuts  (product_name, department_name, price, stock_quantity)
+VALUES (answer.name, answer.department, answer.price, answer.stock );
+
+
+INSERT INTO products (item_id, product_name, department_name, price, stock_quantity) VALUES (12,swell,home,22.80,20)
+
+
 SELECT *
 FROM products ;
-
-
-
