@@ -30,9 +30,6 @@ Click the link below to watch a demo of Bamazon.
 
 [click here for video link](https://drive.google.com/file/d/1ZuNVQya4uKN-5siD1d4NJzxO8RVbY2dk/view)
 
-### Screenshots: Customer Orders
-
-![Image of customer order](https://github.com/asham28/bamazon/tree/master/screenShots/customerOrder.png)
 
 
 
