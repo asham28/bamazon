@@ -32,7 +32,8 @@ Click the link below to watch a demo of Bamazon.
 
 ### Screenshots: Customer Orders
 
-![Image of customer order](https://github.com/asham28/bamazon/screenShots/customerOrder.png)
+![Image of customer order](https://github.com/asham28/bamazon/tree/master/screenShots/customerOrder.png)
+
 
 
 
