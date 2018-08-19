@@ -1,9 +1,8 @@
 // DEPENDENCIES 
 var inquirer = require("inquirer");
 var mysql = require("mysql");
-var consoleTable = require('console.table'); 
+var consoleTable = require('console.table');
 require("dotenv").config();
-
 
 // CONNECTION TO MYSQL DATABASE
 var connection = mysql.createConnection({
@@ -64,6 +63,9 @@ function managerQuery() {
                 addProdcut()
                 break;
 
+            default:
+                console.log("There's been an error.");
+
         };
     });
 }
@@ -74,7 +76,7 @@ function viewProducts() {
     var query = "SELECT * FROM products";
     connection.query(query, function (err, response) {
         if (err) throw err;
-        console.log(consoleTable.getTable(response)); 
+        console.log(consoleTable.getTable(response));
         connection.end();
     })
 };
@@ -85,7 +87,7 @@ function lowInventory() {
     var query = "SELECT * FROM products WHERE stock_quantity <5 ";
     connection.query(query, function (err, response) {
         if (err) throw err;
-        console.log(consoleTable.getTable(response)); 
+        console.log(consoleTable.getTable(response));
         connection.end();
     })
 };
@@ -109,7 +111,10 @@ function addInventory() {
 
         connection.query(query, function (err, response) {
             if (err) throw err;
-            console.log("Stock has been added.");
+            console.log("\n========================")
+            console.log("\nStock has been added.");
+            console.log("\n========================")
+
             viewProducts();
         })
     })
@@ -144,7 +149,7 @@ function addProdcut() {
         }
     ]).then(function (answer) {
 
-        var query = "INSERT INTO products (item_id, product_name, department_name, price, stock_quantity) VALUES (" + answer.itemID + ", '" + answer.name + "' , '" + answer.department + "' ,"  + answer.price + ", " + answer.stock + ")"
+        var query = "INSERT INTO products (item_id, product_name, department_name, price, stock_quantity) VALUES (" + answer.itemID + ", '" + answer.name + "' , '" + answer.department + "' ," + answer.price + ", " + answer.stock + ")"
 
         connection.query(query, function (err, response) {
             if (err) throw err;

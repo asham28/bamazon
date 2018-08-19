@@ -24,3 +24,15 @@ Run the bamazonCustomer.js to view the store. You will be prompted for the ID an
 
 Run the bamazonManager.js to manage the Bamazon store. Choose from a list of options that where you can view existing inventory, view only items with a low inventory (less than 5 units) with an option to order more, and add new products. 
 
+## DEMO
+
+Click the link below to watch a demo of Bamazon. 
+
+[click here for video link](https://drive.google.com/file/d/1ZuNVQya4uKN-5siD1d4NJzxO8RVbY2dk/view)
+
+### Screenshots: Customer Orders
+
+![Image of customer order](https://github.com/asham28/bamazon/screenShots/customerOrder.png)
+
+
+

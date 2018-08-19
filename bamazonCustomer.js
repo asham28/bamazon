@@ -41,6 +41,7 @@ function displayInventory() {
 
 // STEP 2: PROMPT USER 
 setTimeout(customerQuery, 200);
+var totalPriceDepartment; 
 
 function customerQuery() {
 
@@ -74,16 +75,21 @@ function customerQuery() {
                 console.log("\nOrder Successful!")
 
                 // CALCULATING TOTAL PRICE FOR CUSTOMER
-                var totalPrice = parseFloat(response[0].price) * parseFloat(answer.unitNum);
+                var totalPrice = parseFloat(response[0].price).toFixed(2) * parseFloat(answer.unitNum).toFixed(2);
+
+                // totalPriceDepartment =+totalPrice; 
+
                 console.log("\n===============================");
                 console.log("\nYour total is: $", totalPrice, "\nThank you for shopping at Bamazon :) ");
                 console.log("\n===============================");
 
+                var totalPriceDepartment = response[0].product_sales + totalPrice; 
+
+                console.log("\nTOTAL DEPARTMENT PRICE: ", totalPriceDepartment); 
 
                 var quantity = parseInt(response[0].stock_quantity) - parseInt(answer.unitNum)
 
-                query = "UPDATE products SET stock_quantity= " + quantity + " WHERE item_id= " + response[0].item_id + "";
-
+                query = "UPDATE products SET stock_quantity= " + quantity + ", product_sales=" + totalPrice + " WHERE item_id= " + response[0].item_id + "";
                 connection.query(query, function (err, response) {
                     if (err) throw err;
                 });
