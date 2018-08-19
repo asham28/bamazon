@@ -1,6 +1,6 @@
 # Bamazon App
 
-Bamazon is an Amazon-like storefront. The app will take in orders from customers and deplete stock from the store's inventory. It can also view and add invetory. 
+Bamazon is an Amazon-like storefront. The app will take in orders from customers and deplete stock from the store's inventory. It can also view and add inventory. 
 
 ## Installs 
 
@@ -12,6 +12,11 @@ Bamazon is an Amazon-like storefront. The app will take in orders from customers
 ### Inquirer
 
 `npm install inquirer`
+
+### Console Table
+
+`npm install console.table`
+
 
 ## Getting Started
 

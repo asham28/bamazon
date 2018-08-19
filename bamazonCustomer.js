@@ -1,15 +1,10 @@
-// LEFT TO DO
-// 2. MAKE THE DISPLAY INVENTORY MORE CUSTOMER FRIENDLY
-
-
-// STEP UP REQUIRED MODUELS
+// DEPENDENCIES
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var consoleTable = require('console.table');
 require("dotenv").config();
 
-
-
-// CONNECT TO MYSQL DATABASE
+// CONNECTION TO MYSQL DATABASE
 var connection = mysql.createConnection({
     host: process.env.DB_HOST,
     port: 3306,
@@ -34,24 +29,18 @@ connection.connect(function (err) {
 // FUNCTION AFTER CONNECTING TO MYSQL
 // =========================================
 
-//STEP 1: DISPLAY INVENTORY
+// STEP 1: DISPLAY INVENTORY
 function displayInventory() {
-
     var query = "SELECT item_id, product_name, price FROM products";
 
     connection.query(query, function (err, response) {
-        if (err) {
-            throw err;
-        }
-        console.log(response);
+        if (err) throw err;
+        console.log(consoleTable.getTable(response));
     });
 }
 
-// STEP 2: PROMPT USER WITH TWO MESSAGES
-// The first should ask them the ID of the product they would like to buy.
-
-
-setTimeout(customerQuery, 200); 
+// STEP 2: PROMPT USER 
+setTimeout(customerQuery, 200);
 
 function customerQuery() {
 
@@ -66,72 +55,40 @@ function customerQuery() {
             name: "unitNum"
         }
     ]).then(function (answer) {
-        // RUNS QUERY AND GIVES USER BACK SOME INFO
         var query = "SELECT * FROM products WHERE item_id= '" + answer.productID + "'";
 
         connection.query(query, function (err, response) {
             if (err) throw err;
             console.log("========================");
-            console.log("You would like to buy " + answer.unitNum + " " + response[0].product_name + "(s). Processing.")
-
-            //--------------
-            // console.log("Answer.unitNum: ", answer.unitNum);
-            // console.log("Stock quantity: ", response[0].stock_quantity);
+            console.log("You would like to buy " + answer.unitNum + " " + response[0].product_name + "(s). Processing...")
+            console.log("\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.");
 
 
             // CONFIRM QUANTITY IN INVENTORY
-
             if (answer.unitNum > response[0].stock_quantity) {
-                console.log("Insufficient quantity!")
+                console.log("\n===============================");
+                console.log("\nInsufficient quantity!");
+                console.log("\n===============================");
             } else if (answer.unitNum <= response[0].stock_quantity) {
-                console.log("Your order is being processed!")
+
+                console.log("\nOrder Successful!")
 
                 // CALCULATING TOTAL PRICE FOR CUSTOMER
-                var totalPrice = parseFloat(response[0].price)*parseFloat(answer.unitNum); 
-                console.log("===============================");
-                console.log("Your total is: $", totalPrice);    
-                console.log("===============================");
-             
+                var totalPrice = parseFloat(response[0].price) * parseFloat(answer.unitNum);
+                console.log("\n===============================");
+                console.log("\nYour total is: $", totalPrice, "\nThank you for shopping at Bamazon :) ");
+                console.log("\n===============================");
+
 
                 var quantity = parseInt(response[0].stock_quantity) - parseInt(answer.unitNum)
-                
-                 // updateInventory(); 
-                query = "UPDATE products SET stock_quantity= " + quantity + " WHERE item_id= " + response[0].item_id + ""; 
-                console.log("Remainder in inventory: ", quantity); 
-                // console.log("Update query:\n " +  query); 
+
+                query = "UPDATE products SET stock_quantity= " + quantity + " WHERE item_id= " + response[0].item_id + "";
 
                 connection.query(query, function (err, response) {
-                    if (err) {
-                        throw err;
-                    }
-                    // console.log(response);
+                    if (err) throw err;
                 });
-
-                // THIS PRESENTS THE PREVIOUS STOCK INFORMATION, NOT AFTER DATABASE HAS BEEN UPDATED. 
-                // NEED TO FIX
-                // console.log("Stock update after database update: " , response[0].stock_quantity); 
-
-
-
-            } else {
-                console.log("An error has occured.")
             }
             connection.end();
         });
-
-
     });
-}
-
-function updateInventory(){
-
-   var query = "UPDATE products SET stock_quantity= " + quantity + " WHERE item_id= " + response[0].item_id + ""; 
-
-    connection.query(query, function (err, response) {
-        if (err) {
-            throw err;
-        }
-        console.log(response);
-    });
-
 }

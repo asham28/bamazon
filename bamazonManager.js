@@ -1,10 +1,11 @@
 // DEPENDENCIES 
 var inquirer = require("inquirer");
 var mysql = require("mysql");
+var consoleTable = require('console.table'); 
 require("dotenv").config();
 
 
-// CONNECT TO MYSQL DATABASE
+// CONNECTION TO MYSQL DATABASE
 var connection = mysql.createConnection({
     host: process.env.DB_HOST,
     port: 3306,
@@ -25,7 +26,11 @@ connection.connect(function (err) {
 
 });
 
-// MANAGER VIEW 
+// =========================================
+// FUNCTION AFTER CONNECTING TO MYSQL
+// =========================================
+
+// MANAGER VIEW OPTIONS
 function managerQuery() {
 
     inquirer.prompt([{
@@ -69,7 +74,7 @@ function viewProducts() {
     var query = "SELECT * FROM products";
     connection.query(query, function (err, response) {
         if (err) throw err;
-        console.log(response);
+        console.log(consoleTable.getTable(response)); 
         connection.end();
     })
 };
@@ -80,7 +85,7 @@ function lowInventory() {
     var query = "SELECT * FROM products WHERE stock_quantity <5 ";
     connection.query(query, function (err, response) {
         if (err) throw err;
-        console.log(response);
+        console.log(consoleTable.getTable(response)); 
         connection.end();
     })
 };
@@ -95,13 +100,12 @@ function addInventory() {
         },
         {
             type: "input",
-            message: "How many more units would you like to order",
+            message: "What should the total stock number be?",
             name: "addUnits"
         }
     ]).then(function (answer) {
 
         var query = "UPDATE products SET stock_quantity= " + answer.addUnits + " WHERE item_id=" + answer.productID + "";
-        console.log(query);
 
         connection.query(query, function (err, response) {
             if (err) throw err;
@@ -141,7 +145,6 @@ function addProdcut() {
     ]).then(function (answer) {
 
         var query = "INSERT INTO products (item_id, product_name, department_name, price, stock_quantity) VALUES (" + answer.itemID + ", '" + answer.name + "' , '" + answer.department + "' ,"  + answer.price + ", " + answer.stock + ")"
-        console.log(query);
 
         connection.query(query, function (err, response) {
             if (err) throw err;
