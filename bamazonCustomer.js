@@ -1,6 +1,5 @@
 // LEFT TO DO
 // 2. MAKE THE DISPLAY INVENTORY MORE CUSTOMER FRIENDLY
-// 3. CREATE DRY CODE
 
 
 // STEP UP REQUIRED MODUELS
@@ -28,7 +27,6 @@ connection.connect(function (err) {
     console.log("========================")
 
     displayInventory();
-    // customerQuery();
 
 });
 
